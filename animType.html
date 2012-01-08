@@ -1,0 +1,380 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>VX Anim with Letters</title>
+    <script type="text/javascript" src="scripts/vxPro.js"></script>
+    <script type="text/javascript" src="scripts/vx-anim.js"></script>
+   <style type="text/css">
+      body {
+        color: #FFFFFF;
+        background-color: #000000;
+        padding: 20px;
+        overflow: hidden;
+      }
+      * {
+        margin: 0px;
+        padding: 0px;
+      }
+      a { color: lightblue; }
+
+          </style>
+          
+    <script type="text/javascript">
+	    
+      vx.ready(function() {
+    
+	      window.whichContent = vx.$("#content");
+	      window.browserWidth = vx.viewportWidth(document.getElementsByTagName("body")[0]);
+	      window.browserHeight = vx.viewportHeight(document.getElementsByTagName("body")[0]);
+	      var d = document.getElementById("Ding");
+	   });
+    
+	  (function() {  
+		  var letterAnim = {	
+			  doAnim : function() {
+				  var list = document.getElementById("animEffect");
+				  if (list.selectedIndex != 0) {
+					  eval(list.options[list.selectedIndex].value);
+				  }
+			  },
+			  n16 : function(num) {
+				  var str = (parseInt(num, 10)).toString(16);
+				  return str.length == 2 ? str : "0" + str;
+			  },
+			  randomColor : function() {
+				  var r = letterAnim.n16(Math.random() * 255 /* * 128 + 127*/);
+				  var g = letterAnim.n16(Math.random() * 255 /* * 128 + 127*/);
+				  var b = letterAnim.n16(Math.random() * 255 /* * 128 + 127*/);
+				  return "#" + r + g + b;
+			  },
+			
+			  randomNum : function(num) {
+				  return Math.floor(num * (Math.random() % 1));
+			  },
+			  randomRange : function(min, max) {
+				  return min + letterAnim.randomNum(max - min + 1);
+			  },
+			  randomEnd : function() {
+				  var a = letterAnim.randomRange(3, 9) * 100;
+				  var b = letterAnim.randomRange(0, 8 * 10);
+				  var c = letterAnim.randomRange(0, 9);
+				  return (a + b + c);
+			  },
+			  randOpacity : function(elem) {
+				  var opaz = letterAnim.randomRange(50, 100);
+				  elem.style.filter = "alpha(opacity=" + opaz + ")";
+				  elem.style.opacity = opaz / 100;
+			  },
+			  // bezier: basic bezier curve
+			  basicBezierAnim : function(c) {
+				var elem = document.createElement("span");
+				elem.innerHTML = c;
+				elem.style.position = "absolute";
+				elem.style.top = "50px";
+				elem.style.left = "20px";
+				elem.style.fontFamily = "times";
+				if (Math.random() < 0.5) {
+					elem.style.color = "#000000";
+					letterAnim.randOpacity(elem);
+					elem.style.backgroundColor = letterAnim.randomColor();
+					elem.style.padding = "10px";
+				} else {
+					elem.style.color = letterAnim.randomColor();
+				}
+				elem.style.webkitBorderRadius = "10px";
+				elem.style.MozBorderRadius = "10px";
+				document.body.appendChild(elem);
+				var o = { y : 10 };
+				var x = browserWidth;
+				var y = Math.random() * (browserHeight * 2- 100);
+				var topRand = letterAnim.randomEnd();
+				var randBezier1 = letterAnim.randomEnd() * -.5 % 1;
+				var randBezier2  = letterAnim.randomEnd() * 3;
+				var randomRadiusSize = letterAnim.randomRange(40, 100);
+				var opts = {
+					onEnd : function() {
+						document.body.removeChild(elem);
+					},
+					top : { start : 50, end : 700, bezier : 20 },
+					left : { start : 20, end : 20, bezier : 600  }
+				};
+				var opts2 = {
+					fontSize : { start : 10, end : 120, units : "pt" },
+					MozBorderRadius : { start : 10, end : randomRadiusSize, units : "px" },
+					webkitBorderRadius : { start : 10, end : randomRadiusSize, units : "px" }
+				};
+				vx.animate(elem, opts, 3000, 30, vx.easing.sineEaseOut);
+				vx.animate(elem, opts2, 3000, 30, vx.easing.backAndForth);
+			},	  
+			  // bezier: random bezier curve
+			  randomBezierAnim : function(c) {
+				  var elem = document.createElement("span");
+				  elem.innerHTML = c;
+				  elem.style.position = "absolute";
+				  elem.style.top = "50px";
+				  elem.style.left = "20px";
+				  elem.style.fontFamily = "times";
+				  if (Math.random() < 0.5) {
+					  elem.style.color = "#000000";
+					  letterAnim.randOpacity(elem);
+					  elem.style.backgroundColor = letterAnim.randomColor();
+					  elem.style.padding = "10px";
+				  } else {
+					  elem.style.color = letterAnim.randomColor();
+				  }
+				  elem.style.webkitBorderRadius = "10px";
+				  elem.style.MozBorderRadius = "10px";
+				  document.body.appendChild(elem);
+				  var o = { y : 10 };
+				  var x = browserWidth;
+				  var y = Math.random() * (browserHeight * 2- 100);
+				  var topRand = letterAnim.randomEnd();
+				  var randBezier1 = letterAnim.randomEnd() * -.5 % 1;
+				  var randBezier2  = letterAnim.randomEnd() * 1.5;
+				  var randomRadiusSize = letterAnim.randomRange(40, 100);
+				  var opts = {
+					  onEnd : function() {
+						  document.body.removeChild(elem);
+					  },
+					  top : { start : 50, end : topRand, bezier : randBezier1 },
+					  left : { start : 20, end : -20, bezier : randBezier2  }
+				  };
+				  var opts2 = {
+					  fontSize : { start : 10, end : 120, units : "pt" },
+					  MozBorderRadius : { start : 10, end : randomRadiusSize, units : "px" },
+					  webkitBorderRadius : { start : 10, end : randomRadiusSize, units : "px" }
+				  };
+				  vx.animate(elem, opts, 3000, 30, vx.easing.sineEaseOut);
+				  vx.animate(elem, opts2, 3000, 30, vx.easing.backAndForth);
+			  },
+			  // bezier: back ease out/in bezier curve		  
+			  backEaseBezierAnim : function(c) {
+				  var elem = document.createElement("span");
+				  elem.innerHTML = c;
+				  elem.style.position = "absolute";
+				  elem.style.top = "50px";
+				  elem.style.left = "20px";
+				  elem.style.fontFamily = "times";
+				  if (Math.random() < 0.5) {
+					  elem.style.color = "#000000";
+					  letterAnim.randOpacity(elem);
+					  elem.style.backgroundColor = letterAnim.randomColor();
+					  elem.style.padding = "10px";
+				  } else {
+					  elem.style.color = letterAnim.randomColor();
+				  }
+				  var randomRadiusSize = letterAnim.randomRange(40, 100);
+				  elem.style.webkitBorderRadius = "10px";
+				  elem.style.MozBorderRadius = "10px";
+				  document.body.appendChild(elem);
+				  var o = { y : 10 };
+				  var x = browserWidth;
+				  var y = Math.random() * (browserHeight * 2- 100);
+				  var topRand = letterAnim.randomEnd();
+				  var randBezier1 = letterAnim.randomEnd() * -.5 % 1;
+				  var randBezier2  = letterAnim.randomEnd() * 2.5;
+				  var randFontSize = letterAnim.randomRange(30, 120);
+				  var randE1 = letterAnim.randomRange(0, 40);
+				  var randomEasing1 = eval("vx.easing." + vx.easing.array[randE1]);
+				  var opts = {
+					  onEnd : function() {
+						  document.body.removeChild(elem);
+					  },
+					  top : { start : 50, end : 700, bezier : randBezier1 },
+					  left : { start : 20, end : -20, bezier : randBezier2  }
+				  };
+				  var opts2 = {
+					  fontSize : { start : 10, end : randFontSize, units : "pt", bezier : randomEasing1 },
+					  MozBorderRadius : { start : 10, end : randomRadiusSize, units : "px" },
+					  webkitBorderRadius : { start : 10, end : randomRadiusSize, units : "px" }
+				  };
+				  vx.animate(elem, opts, 3000, 30, vx.easing.backEaseOutIn);
+				  vx.animate(elem, opts2, 3000, 30, vx.easing.backEaseOutIn);
+			  },	
+			  // bezier: elastic ease in/out bezier curve
+			  elasticBezierAnim : function(c) {
+			  // Tried to animate backgrounds on this one, but too intense for browser.
+				  var elem = document.createElement("span");
+				  elem.innerHTML = c;
+				  elem.style.position = "absolute";
+				  elem.style.top = "50px";
+				  elem.style.left = "20px";
+				  elem.style.fontFamily = "times";
+				  if (Math.random() < 0.5) {
+					  elem.style.color = "#000000";
+					  letterAnim.randOpacity(elem);
+					  elem.style.backgroundColor = letterAnim.randomColor();
+					  elem.style.padding = "10px";
+				  } else {
+					  elem.style.color = letterAnim.randomColor();
+				  }
+				  elem.style.webkitBorderRadius = "10px";
+				  elem.style.MozBorderRadius = "10px";
+				  document.body.appendChild(elem);
+				  var o = { y : 10 };
+				  var x = browserWidth;
+				  var y = Math.random() * (browserHeight * 2- 100);
+				  var randomRadiusSize = letterAnim.randomRange(40, 100);
+				  var topRand = letterAnim.randomEnd();
+				  var randomTime = letterAnim.randomRange(15, 35) * 100;
+				  var randomFontSize = letterAnim.randomRange(40, 120);
+				  var randomRadiusSize = letterAnim.randomRange(40, 100);
+				  var randBezier1 = letterAnim.randomEnd() * -.5 % 1;
+				  var randBezier2  = letterAnim.randomEnd() * 2.5;
+				  
+				  var opts = {
+					  onEnd : function() {
+						  document.body.removeChild(elem);
+					  },
+					  top : { start : 50, end : 650, bezier : randBezier1 },
+					  left : { start : 20, end : -20, bezier : randBezier2  }
+				  };
+				  var opts2 = {
+					  fontSize : { start : 10, end : randomFontSize, units : "pt" },
+					  MozBorderRadius : { start : 10, end : randomRadiusSize, units : "px" },
+					  webkitBorderRadius : { start : 10, end : randomRadiusSize, units : "px" }
+				  };
+				  
+				  vx.animate(elem, opts, randomTime, 30, vx.easing.elasticEaseInOut);
+				  vx.animate(elem, opts2, randomTime, 30, vx.easing.elasticEaseOutIn);
+			  },	
+			  // bezier: random easing on all values  
+			  randomBezierValuesAnim : function(c) {
+				  var elem = document.createElement("span");
+				  elem.innerHTML = c;
+				  elem.style.position = "absolute";
+				  elem.style.top = "50px";
+				  elem.style.left = "20px";
+				  elem.style.fontFamily = "times";
+				  if (Math.random() < 0.5) {
+					  elem.style.color = "#000000";
+					  letterAnim.randOpacity(elem);
+					  elem.style.backgroundColor = letterAnim.randomColor();
+					  elem.style.padding = "10px";
+				  } else {
+					  elem.style.color = letterAnim.randomColor();
+				  }
+				  var randomRadiusSize = letterAnim.randomRange(40, 100);
+				  elem.style.webkitBorderRadius = "10px";
+				  elem.style.MozBorderRadius = "10px";
+				  document.body.appendChild(elem);
+				  var o = { y : 10 };
+				  var x = browserWidth;
+				  var y = Math.random() * (browserHeight * 2- 100);
+				
+				  var topRand = letterAnim.randomEnd();
+				  var randBezier1 = letterAnim.randomEnd() * -.5 % 1;
+				  var randBezier2  = letterAnim.randomEnd() * 3;
+				  var opts = {
+					  onEnd : function() {
+						  document.body.removeChild(elem);
+					  },
+					  top : { start : 50, end : topRand, bezier : randBezier1 },
+					  left : { start : 20, end : -90, bezier : randBezier2} 
+				  };
+				
+				  var opts2 = {
+					  fontSize : { start : 10, end : 120, units : "pt" },
+					  MozBorderRadius : { start : 10, end : randomRadiusSize, units : "px" },
+					  webkitBorderRadius : { start : 10, end : randomRadiusSize, units : "px" },
+					  paddingLeft : { start : 4, end : 40, units : "px" },
+					  paddingRight : { start : 4, end : 40, untis : "px" },
+					  skew : { start : 0, end : 45, units : "deg" } 
+				  };
+				  var randE1 = letterAnim.randomRange(0, 41);
+				  var randE2 = letterAnim.randomRange(0, 41);
+				  var randomEasing1 = eval("vx.easing." + vx.easing.array[randE1]);
+				  var randomEasing2 = eval("vx.easing." + vx.easing.array[randE2]);
+				
+				  vx.animate(elem, opts, 3000, 30, randomEasing1);
+				  vx.animate(elem, opts2, 3000, 30, randomEasing2);
+			  },
+			  // bezier: basic bezier curve
+			  basicBezier : function() {
+				  if (whichContent.innerHTML.length > 0) {
+					  var str = whichContent.innerHTML;
+					  var c = str.slice(0, 1);
+					  if (c != " ") {
+						  letterAnim.basicBezierAnim(c);
+					  }
+					  whichContent.innerHTML = str.slice(1);
+					  setTimeout(letterAnim.basicBezier, 100);
+				  }
+			  },
+			  // bezier: random bezier curve
+			  randomBezier : function() {
+				  if (whichContent.innerHTML.length > 0) {
+					  var str = whichContent.innerHTML;
+					  var c = str.slice(0, 1);
+					  if (c != " ") {
+						  letterAnim.randomBezierAnim(c);
+					  }
+					  whichContent.innerHTML = str.slice(1);
+					  setTimeout(letterAnim.randomBezier, 100);
+				  }
+			  },
+			  // bezier: back ease out/in bezier curve
+			  backEaseBezier : function() {
+				  if (whichContent.innerHTML.length > 0) {
+					  var str = whichContent.innerHTML;
+					  var c = str.slice(0, 1);
+					  if (c != " ") {
+						  letterAnim.backEaseBezierAnim(c);
+					  }
+					  whichContent.innerHTML = str.slice(1);
+					  setTimeout(letterAnim.backEaseBezier, 100);
+				  }
+			  },
+			  // bezier: elastic ease in/out bezier curve
+			  elasticBezier : function() {
+				  if (whichContent.innerHTML.length > 0) {
+					  var str = whichContent.innerHTML;
+					  var c = str.slice(0, 1);
+					  if (c != " ") {
+						  letterAnim.elasticBezierAnim(c);
+					  }
+					  whichContent.innerHTML = str.slice(1);
+					  setTimeout(letterAnim.elasticBezier, 100);
+				  }
+			  },
+			  // bezier: random easing on all values
+			  randomBezierValues : function() {
+				  if (whichContent.innerHTML.length > 0) {
+					  var str = whichContent.innerHTML;
+					  var c = str.slice(0, 1);
+					  if (c != " ") {
+						  letterAnim.randomBezierValuesAnim(c);
+				   	}
+				   	whichContent.innerHTML = str.slice(1);
+				   	setTimeout(letterAnim.randomBezierValues, 100);
+			  	}
+		  	}
+	  	};
+		window.letterAnim = letterAnim;
+	})();
+	  
+</script>
+    </head>
+    <body>
+    <form name="animForm" id="animForm">
+    <h2 id="animStarter">Vx-Anim: 
+
+    <select id="animEffect" onChange="letterAnim.doAnim()">
+        <option>Bezier animations:</option>
+        <option label="basic bezier curve" value="setTimeout(letterAnim.basicBezier, 50);">basic bezier</option>
+        <option label="random bezier curve" value="setTimeout(letterAnim.randomBezier, 50);">random bezier</option>
+        <option label="back ease out/in bezier curve" value="setTimeout(letterAnim.backEaseBezier, 50);">back ease bezier</option>
+        <option label="elastic ease in/out bezier curve" value="setTimeout(letterAnim.elasticBezier, 50);">elastic ease bezier</option>
+        <option label="random easing on all values" value="setTimeout(letterAnim.randomBezierValues, 50);">random easing on all values of bezier</option>
+</select>
+<a href="#" onClick="window.location.reload(); javascript:document.animForm.reset();">Reset Page</a></h2>
+</form>
+    <p id="content">
+		When in the Course of human events, it becomes necessary for one people to dissolve the political bands which have connected them with another, and to assume among the powers of the earth, the separate and equal station to which the Laws of Nature and of Nature"s God entitle them, a decent respect to the opinions of mankind requires that they should declare the causes which impel them to the separation.
+		<br>
+		We hold these truths to be self-evident, that all men are created equal, that they are endowed by their Creator with certain unalienable Rights, that among these are Life, Liberty and the pursuit of Happiness.</p>
+
+
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>Vx-Anim - Easing</title>
+    <script type="text/javascript" src="scripts/vxPro.js"></script>
+    <script type="text/javascript" src="scripts/vx-anim.js"></script>
+    <script type="text/javascript">
+	  
+	vx.ready(function() {
+	  var square = document.getElementById('square');
+      var easing = vx.easing.sineEaseInOut;
+      function move1() {
+         var opts = {
+            onEnd : function() {
+                move2();
+            },
+            left : { end : 268, start : 0 },
+            width : { end : 60, start : 10 },
+            height : { end : 60, start : 10 },
+            webkitBorderRadius : { start : 10, end : 0 },
+            MozBorderRadius : { start : 10, end : 0  },
+            OBorderRadius : { start : 10, end : 0  },
+            borderRadius : { start : 10, end : 0  }
+         };
+         vx.animate(square, opts, 1000, 30, vx.easing.sineEaseOut);
+      }
+
+      function move2() {
+        var opts = {
+            onEnd : function() {
+                move3();
+            },
+            left : { end : 278 , start : 268 },
+            top : { end : 178, start : 0 },
+            width : { end : 30, start : 60 },
+            height : { end : 30, start : 60 },
+            backgroundColor : { start : "red", end : "green" },
+            borderWidth : { start : 1, end : 10 },
+            borderColor : { start : "orange", end : "lightyellow" },
+            webkitBorderRadius : { start : 0, end : 20 },
+            MozBorderRadius : { start : 0, end : 20  },
+            OBorderRadius : { start : 0, end : 20  },
+            borderRadius : { start : 0, end : 20  }
+        };
+        vx.animate(square, opts, 1000, 30, vx.easing.bounceEaseOut);
+      }
+      function move3() {
+        var opts = {
+            onEnd : function() {
+                move4();
+            },
+            left : { end : 1, start : 298 },
+            top : { end : 168, start : 198 },
+            width : { end : 60, start : 30 },
+            height : { end : 60, start : 30 },
+            borderWidth : { start : 10, end : 2 },
+            "border-color" : { start : "lightyellow", end : "brown" },
+            opacity : { start : 1, end : 0.5 },
+            webkitBorderRadius : { end : 40, start : 20 },
+            MozBorderRadius : { end : 40, start : 20  },
+            OBorderRadius : { end : 40, start : 20  },
+            borderRadius : { end : 40, start : 20  }
+        };
+        vx.animate(square, opts, 1000, 30, vx.easing.elasticEaseOut);
+      }
+      function move4() {
+        var opts = {
+            onEnd : function() {
+                move5();
+            },
+            left : { start : 1, end : 1 },
+            top : { start : 168, end : 0 },
+            width : { end : 10, start : 60 },
+            height : { end : 10, start : 60 },
+            backgroundColor : { start : "green", end : "orange" },
+            borderWidth : { end : 6, start : 2 },
+            borderColor : { start : "brown", end : "lavender" },
+            opacity : { end : 1, start : 0.5 },
+            webkitBorderRadius : { start : 40, end : 6 },
+            MozBorderRadius : { start : 40, end : 6  },
+            OBorderRadius : { start : 40, end : 6  },
+            borderRadius : { start : 40, end : 6  }
+        };
+        vx.animate(square, opts, 1000, 30, vx.easing.backEaseOut);
+      }
+      function move5() {
+        var opts = {
+            onEnd : function() {
+                move6();
+            },
+            left : { start : 1, end : 250 },
+            top : { start : 0, end : 162 },
+            width : { end : 80, start : 10 },
+            height : { end : 60, start : 10 },
+            backgroundColor : { start : "lavender", end : "blue"},
+            opacity : { start : 0.25, end : 1 },
+            webkitBorderRadius : { end : 20, start : 6 },
+            MozBorderRadius : { end : 20, start : 6  },
+            OBorderRadius : { end : 20, start : 6  },
+            borderRadius : { end : 20, start : 6  }
+        };
+        vx.animate(square, opts, 1000, 30, vx.easing.bounceEaseOut);
+      }
+      function move6() {
+        var opts = {
+            onEnd : function() {
+                move7();
+            },
+            left : { start : 228, end : 1 },
+            top : { start : 164, end : 216 },
+            width : { start : 80, end : 10 },
+            height : { start : 60, end : 10 },
+            backgroundColor : { start : "blue", end : "yellow" },
+            borderWidth : { start : 8, end : 2 },
+            borderColor : { start : "lightgreen", end : "violet" }
+        };
+        vx.animate(square, opts, 1000, 30, vx.easing.expoEaseOut);
+      }
+      function move7() {
+        var opts = {
+            onEnd : function() {
+                move8();
+            },
+            left : { start : 1, end : 268 },
+            top : { start : 216, end : 1 },
+            width : { end : 60, start : 10 },
+            height : { end : 60, start : 10 },
+            backgroundColor : { start : "yellow", end : "mediumpurple" },
+            borderWidth : { start : 8, end : 1 },
+            borderColor : { start : "violet", end : "orange" },
+            opacity : { start : 1, end : 0.15 }
+        };
+        vx.animate(square, opts, 1000, 30, vx.easing.sineEaseInOut);
+      }
+      function move8() {
+        var opts = {
+            onEnd : function() {
+                move9();
+            },
+            left : { start : 268, end : 304 },
+            top : { end : 208, start : 1 },
+            width : { start : 60, end : 10 },
+            height : { start : 60, end : 10 },
+            backgroundColor : { start : "mediumpurple", end : "turquoise" },
+            borderWidth : { end : 8, start : 1 },
+            borderColor : { end : "forestgreen", start : "orange" },
+            opacity : { start : 0.15, end : 1 }
+        };
+        vx.animate(square, opts, 1000, 30, vx.easing.sineEaseInOut);
+      }
+      function move9() {
+        var opts = {
+            onEnd : function() {
+                move1();
+            },
+            left : { end : 1, start : 250 },
+            top : { end : 0, start : 174 },
+            backgroundColor : { start : "turquoise", end : "red" },
+            backgroundColor : { start : "mediumpurple", end : "turquoise" },
+            borderWidth : { start : 8, end : 1 },
+            borderColor : { start : "forestgreen", end : "orange" }
+        };
+        vx.animate(square, opts, 1000, 30, vx.easing.bounceEaseOut);
+      }
+      move1();	
+});
+    </script>
+    <style type="text/css">
+      body {
+        color: #FFFFFF;
+        background-color: #000000;
+      }
+      #border {
+        border: 1px solid #555555;
+        position: relative;
+        width: 330px;
+        height: 230px;
+        margin-top: 100px;
+        margin-left: 100px;
+      }
+      #square {
+        background-color: red;
+        border: 1px solid orange;
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        top: 0px;
+        left: 0px;
+      }
+    </style>
+</head>
+<body>
+    <h1>Vx-Anim Easing in Action</h1>
+	<p>2008 Robert Biggs</p>
+    
+    <div id="border">
+    	<div id="square"></div>
+	</div>
+  
+</body></html>

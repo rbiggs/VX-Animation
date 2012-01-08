@@ -1,0 +1,302 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+<title>Vx-Anim&mdash;Easing &amp; Bezier Paths</title>
+
+<style type="text/css">
+html, body {
+	margin: 0px;
+	padding: 0px;
+}
+body {
+    margin: 0px;
+    padding: 0px;
+    background: #eee;
+    height: 100%;
+}
+#wrapper {
+    overflow: hidden;
+    height: 100%;
+}
+#main {
+    width: 740px;
+    text-align: center;
+    margin: 0px auto;
+    line-height: 1.5em;
+    font: normal 10pt/13pt Arial, Helvetica, sans-serif;
+    background-color:white;
+    padding: 20px;
+}
+#main * {
+    text-align: left;
+}
+.clear {
+    clear: both;
+}
+#footer-wrapper {
+    margin: 0;
+    padding: 0 0 9px 0;
+    color: #ddd;
+}
+
+div#morph, div#pathAnim, div#bezierAnim, div#path1 {
+	border: 4px #B25140 solid;
+	padding: 20px;
+	overflow: hidden;
+	background-color: #FFE4CE;
+	color: #984900;
+	width: 350px;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	-moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+}
+div.animSheath {
+    position: relative;
+    height: 92px;
+}
+h1 {
+	font: bold 16pt/20pt Arial, Helvetica, sans-serif;
+}
+</style>
+
+<script src="scripts/vx-anim.js" type="text/javascript">
+</script>
+
+<script type="text/javascript">
+
+function Morph(value) {   
+    elm = document.getElementById("morph");
+    var opts1 = {
+       "background-color" : { start : "#FFE4CE", end : "#00FF00" }, 
+       color : { start : "#984900", end : "#0000FF" }, 
+       "border-width" : { start : 4, end : 12 }, 
+       "border-color" : { start : "#B25140", end : "#0000FF" }, 
+       width : { start : 350, end : 250 }, 
+       padding : { start : "20 20 20", end : "20 90 70" },
+       top : { start : 0, end : 30 }, 
+       left : { start : 0, end : 50 }, 
+       "font-size" : { start : 14, end : 32, untis: "pt" }, 
+       "line-height" : { start : 18, end : 40 }
+    };
+    var opts2 = {
+       backgroundColor : {  start : "#00FF00", end : "#FFE4CE" }, 
+       color : { start : "#0000FF", end : "#984900" }, 
+       borderWidth : { start : 12, end : 4 }, 
+       borderColor : { start : "#0000FF", end : "#B25140" }, 
+       width : { start : 250, end : 350 }, 
+       padding : {start : "20 90 70", end : "20 20 20" },
+       top : { start : 30, end : 0 }, 
+       left : { start : 50, end : 0 }, 
+       fontSize : { start : 32, end : 14 }, 
+       lineHeight : { start : 40, end : 18 }
+   };
+   if (value == 1) {
+        vx.animate(elm, opts1);
+   } else {
+        vx.animate(elm, opts2);
+   }
+}
+
+function moveOnPath() {
+    elem = document.getElementById("pathAnim");
+    var opts = {
+        "background-color" : {
+            start : "#FFE4CE",
+            end : "#FF0000"
+        },
+        "border-color" : {
+            start : "#B25140",
+            end : "#000000"
+        },
+        color : {
+            start : "#984900",
+            end : "#FFFFFF"
+        },
+        top : {
+            start : 0,
+            end : -200,
+            units : "px"
+        },
+        left : {
+            start : 0,
+            end : 180,
+            units : "pt"
+        }
+    };
+    vx.animate(elem, opts, 1500, 20, vx.easing.bounceEaseOut);
+}
+function moveOnPath2() {
+    elem = document.getElementById("pathAnim");
+    var opts = {
+        "background-color" : {
+            start : "#FF0000",
+            end : "#FFE4CE"
+        },
+        "border-color" : {
+            start : "#000000",
+            end : "#B25140"
+        },
+        color : {
+            start : "#FFFFFF",
+            end : "#984900"
+        },
+        top : {
+            start : -200,
+            end : 0,
+            units : "px"
+        },
+        left : {
+            start : 180,
+            end : 0,
+            units : "pt"
+        }
+    };
+    vx.animate(elem, opts, 1500, 20, vx.easing.bounceEaseOut);
+}
+
+function followBezierPath() {
+    var elem = document.getElementById("bezierAnim");
+    var opts1 = {
+        backgroundColor : { start : "#FFE4CE", end : "#FF0000" },
+        color : { start : "#984900", end : "#FFFFFF" },
+        borderColor : { start : "#B25140" , end : "#0000FF"},
+	    borderWidth : { start : 4, end : 10 },
+        top : { start : 0, end : -100, bezier : -500 },
+        left : { start : 0, end : 450, bezier : 300 },
+        onEnd : function() {
+            returnBezierPath();
+        }
+    }; 
+    vx.animate(elem, opts1, 1500, 20, vx.easing.circleEaseIn);
+}
+
+function returnBezierPath() {
+    var elem = document.getElementById("bezierAnim");
+    var opts1 = {
+        backgroundColor : { start : "#FF0000", end : "#FFE4CE" },
+        color : { start : "#FFFFFF", end : "#984900" },
+        borderColor : { start : "#0000FF" , end : "#B25140"},
+	    borderWidth : { start : 10, end : 4 },
+        top : { start : -100, end : 0, bezier : 800 },
+        left : { start : 450, end : 0, bezier : -100 },
+        onEnd : function() {
+        }
+    }; 
+    vx.animate(elem, opts1, 1500, 20, vx.easing.circleEaseIn);
+}
+
+function revertAnimation() {
+    var opts = {
+        backgroundColor : {
+            start : "#FFE4CE",
+            end : "blue"
+        },
+        color : {
+            start : "#984900",
+            end : "#FFFFFF"
+        },
+        "border-color" : {
+            end : "#FF00AA",
+            start : "#B25140"
+        },
+        top: {
+            start : 0,
+            end : -100
+        },
+        left: {
+            start : 0,
+            end : 450
+        },
+        borderWidth : {
+            start : 4,
+            end : 10
+        }
+    };
+    vx.delay(2000, function() {
+        vx.animate(document.getElementById("path1"), opts, 3000, 20, vx.easing.backAndForth);
+    });
+}
+
+function initializeLinks() {
+    var links = document.getElementsByTagName("a");
+    for (var i = 0, len = links.length; i < len; i++) {
+        switch(i) {
+        case 0 :
+            links[i].onclick = function() {
+                Morph(1);
+                return;
+            }
+        break;  
+        case 1 :
+            links[i].onclick = function() {
+                Morph(2);
+                return;
+            }
+        break;
+        case 2 :
+            links[i].onclick = function() {
+                moveOnPath();
+                return;
+            }
+        break;
+        case 3 :
+            links[i].onclick = function() {
+                moveOnPath2();
+                return;
+            }
+        break;
+        case 4 :
+            links[i].onclick = function() {
+                followBezierPath();
+                return;
+            }   
+        break;
+        case 5 :
+            links[i].onclick = function() {
+                revertAnimation()
+                return;
+            }
+        break;
+        }
+    }
+}
+vx.loadEvent(initializeLinks);
+</script>
+</head>
+<body>
+	<div id="wrapper">
+    <div id="main">
+        <h1>Animating Multi-Part Values and Bezier Paths with Easing</h1>
+        <h3>Morph with Multiple Properties</h3>
+        <p><a href="#">Morph</a> <a href="#">Revert</a></p>
+        
+        <div class="animSheath">
+            <div id="morph">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+        </div>
+            
+        <h3>Motion with Easing</h3>
+        
+        <p><a href="#">Move Along Path</a> <a href="#">Revert</a></p>
+        <div class="animSheath">
+            <div id="pathAnim" >Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+        </div>
+        
+        <h3>Bezier Path</h3>
+        <p><a href="#">Move Along Bezier Path</a></p>
+        <div class="animSheath">
+            <div id="bezierAnim">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+        </div>
+            
+        <h3>Return Animation (with a slight delay before launch)</h3>
+        <p> <a href="#">Revert Animation</a></p>
+        <div class="animSheath">
+            <div id="path1" >Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+        </div>
+        
+        <div style="clear: both;"></div>
+    </div>
+    </div>
+</body>
+</html>

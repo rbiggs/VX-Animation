@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head>
+<title>VX: Cloning, Wrapping and Unwrapping</title>
+            
+	<style type="text/css">
+	body { padding: 10px; margin: 0px;
+      font-family : Arial, Helvetica, sans-serif; }
+   #main { padding: 20px;
+      border: solid 2px #ccc;
+      background-color: #FFFEDF; }
+   h1 { font: bold 20pt/22pt Calibri, Myriad, Arial, Helvetica, sans-serif;
+       color: #960; }
+   h2 { font: bold 16pt Calibri, Myriad, Arial, Helvetica, sans-serif;
+       color: #C93; }
+   a { text-decoration: none; }
+   a:hover { text-decoration: underline; }
+   #box  div {
+      line-height: 100px;
+      text-align: center;
+      border: 2px solid #ccc;
+      border-color: #ccc #999 #999 #ccc;
+      background-color: #E7DF89;
+   }       
+   .wrapper1 {
+      border: solid 3px red;
+      padding: 4px
+   }
+   .wrapper2 {
+      border: double 6px green;
+      padding: 6px;
+   }
+   .wrapper3 {
+      border: solid 4px blue;
+      padding: 8px;
+   }
+   
+	</style>
+	<script type="text/javascript" src="scripts/vxPro.js"></script>
+	<script type="text/javascript">
+	   vx.ready(function() {
+
+	      var w1 = vx.$("#wrap1");
+	      w1.onclick = function() {
+	         vx.wrap(vx.$("#box"), '<div class="wrapper1"><\/div>');
+	         return false;
+	      };
+	      var w2 = vx.$("#wrap2");
+	      w2.onclick = function() {
+	         vx.wrap(vx.$("#box"), '<div class="wrapper2"><\/div>');
+	         return false;
+	      };
+	      var w3 = vx.$("#wrap3");
+	      w3.onclick = function() {
+	         vx.wrap(vx.$("#box"), '<div class="wrapper3"><\/div>');
+	         return false;
+	      };
+	      var uw = vx.$("#unwrap");
+	      uw.onclick = function() {
+	         // We don't want to remove the page's main div after removing
+	         // the box's wrappers, so we check and return false if
+	         // div #main is the parent of the box.
+	         if (vx.getAttr(vx.$("#box").parentNode, "id") == "main") {
+	            return false;
+	         }
+	         vx.unwrap(vx.$("#box"));
+	         return false;
+	      };
+	      var uwa = vx.$("#unwrapAll");
+	      uwa.onclick = function() {
+	         // Check to see if box is a child of #main.
+	         // If it is, exit or IE will err.
+	         if (vx.getAttr(vx.$("#box").parentNode, "id") == "main") {
+	            return false;
+	         }
+	         do {
+	            vx.unwrap(vx.$("#box"));
+	         } while (vx.getAttr(vx.$("#box").parentNode, "id") != "main");
+	         return false;
+	      };
+	   });
+	</script>
+	</head>
+	<body>
+
+
+<div id="main">
+<h1>
+	Clone, Wrap and Unwrap
+</h1>
+<p>The following links will add divs with the following class to the box below:</p>
+<pre>.wrapper1 { border: solid 2px red; padding: 4px; }
+.wrapper2 { border: double 6px green; padding: 6px; }
+.wrapper3 { border: solid 4px blue; padding: 8px; }</pre>
+<ul>
+   <li><a id="wrap1" href="#">Wrap with: &lt;div class="wrapper1"&gt;&lt;/div&gt; Red</a></li>
+   <li><a id="wrap2" href="#">Wrap with: &lt;div class="wrapper2"&gt;&lt;/div&gt; Green</a></li>
+   <li><a id="wrap3" href="#">Wrap with: &lt;div class="wrapper3"&gt;&lt;/div&gt; Blue</a></li>
+   <li><a id="unwrap" href="#">Remove most recent wrapper</a></li>
+   <li><a id="unwrapAll" href="#">Remove all wrappers</a></li>
+</ul>
+<h2>Wrap up the Box Below</h2>
+<p>You may notice that the wrapper added is always the innermost of possible concentric wrappers. This is the opposite of how a tree adds rings. This is because the wrap method is targeting the box and wrapping it, not the collection of wrappers. Similarly, the unwrap method starts with the wrap that is immediate to the box and works its way out. Normally, the unwrap function will work its way up the DOM, removing any outer nodes, until it reaches the body tag. Unwrap could as well remove that tag, leaving the target node as the next sibling of the head tag, but I doubt anyone would want that. Therefore unwrap will never remove the body tag, even when that is the parent tag of the target element.
+
+<div id="box">
+   <div>Wrap Me</div>
+</div>
+
+</div>
+</body>
+</html>
